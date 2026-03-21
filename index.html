@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cornelia Manda | Project | Befolgte Schritte Detail</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Global Reset & Typography */
+        * { box-sizing: border-box; }
+        body {
+            margin: 0; padding: 0;
+            font-family: "Roboto", sans-serif;
+            font-size: 16px; color: #333;
+            background-color: #E0E2DF; line-height: 1.6;
+        }
+
+        h1, h2, h3, a, th { font-family: "Playfair Display", serif; }
+
+        /* --- Link Reset --- */
+        a, a:visited, a:active {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; background-color: #E0E2DF; min-height: 100vh; }
+
+        /* Navigation Area */
+        header {
+            display: grid; grid-template-columns: 30% 70%;
+            align-items: center; background-color: #DDBDBE;
+            padding: 17px 60px; position: relative; z-index: 1000;
+        }
+
+        .logo { 
+            font-family: "Playfair Display", serif;
+            font-size: 1.5em; 
+            letter-spacing: 1px; 
+            color: #655C5B; 
+        }
+
+        nav ul { list-style: none; padding: 0; margin: 0; text-align: right; }
+        nav li { display: inline-block; margin-left: 40px; position: relative; vertical-align: middle; }
+        
+        nav a { 
+            color: #655C5B !important; 
+            font-size: 1.1em; 
+            display: inline-block; 
+            padding: 10px 0; 
+        }
+
+        nav a:hover { color: white !important; cursor: pointer; }
+
+        /* Highlights 'Projects' as active parent */
+        nav > ul > li:nth-child(3) > a { color: white !important; }
+
+        /* --- Dropdown Menu Styles --- */
+        .dropdown-content {
+            display: none; position: absolute; background-color: #DDBDBE;
+            min-width: 200px; box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            z-index: 100; text-align: left; padding: 10px 0; top: 100%; left: 0; margin-top: -5px;
+        }
+
+        .dropdown-content li { display: block; margin: 0; }
+
+        .dropdown-content a, .dropdown-content a:visited { 
+            color: #655C5B !important; 
+            padding: 12px 20px; 
+            display: block; 
+            font-size: 1.1em; 
+            font-family: "Playfair Display", serif;
+            font-weight: 400;
+        }
+
+        /* Highlights 'Videography' in white for this specific page */
+        .dropdown-content li:nth-child(1) a {
+            color: white !important;
+        }
+
+        .dropdown-content a:hover { background-color: #E0E2DF; color: #816B6E !important; }
+        .dropdown:hover .dropdown-content { display: block; }
+
+        /* --- Hero Section (WHITE) --- */
+        .project-hero {
+            padding: 60px 80px 20px 80px; background-color: white;
+            border-bottom: 1px solid #DDBDBE;
+        }
+
+        .back-button {
+            display: inline-block; padding: 10px 25px; background-color: #C99B9B;
+            color: white !important; font-weight: bold; margin-bottom: 30px;
+            font-family: "Playfair Display", serif;
+        }
+        .back-button:hover { background-color: #816B6E; transform: rotate(-2deg); }
+
+        .hero-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+        .hero-text h1 { font-size: 4em; color: #816B6E; margin: 0 0 15px 0; text-transform: uppercase; line-height: 1; }
+        
+        .project-tags { margin-bottom: 20px; }
+        .project-tags span {
+            display: inline-block; padding: 5px 15px; background-color: #F5F5F5;
+            color: #C99B9B; font-weight: 900; font-size: 0.8em;
+            text-transform: uppercase; margin-right: 10px; border-radius: 20px;
+            font-family: "Roboto", sans-serif;
+        }
+        .hero-meta { color: #655C5B; font-style: italic; margin-bottom: 20px; }
+
+        /* --- Carousel Logic --- */
+        .project-main-media { 
+            position: relative;
+            width: 100%; 
+            height: 500px; 
+            background-color: #000; 
+            border: 10px solid white; 
+            box-shadow: 15px 15px 0px rgba(101, 92, 91, 0.1); 
+            overflow: hidden;
+        }
+
+        .mySlides {
+            display: none;
+            height: 100%;
+            width: 100%;
+        }
+
+        .mySlides img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            margin-top: -22px;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 25px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(101, 92, 91, 0.3);
+            z-index: 10;
+        }
+
+        .next { right: 0; border-radius: 3px 0 0 3px; }
+        .prev:hover, .next:hover { background-color: #816B6E; }
+
+        .dot-container {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .dot {
+            cursor: pointer;
+            height: 12px;
+            width: 12px;
+            margin: 0 4px;
+            background-color: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active-dot, .dot:hover { background-color: white; }
+
+        /* --- Content Sections --- */
+        .content-section { padding: 60px 80px; display: grid; grid-template-columns: 30% 70%; gap: 50px; }
+        .section-light { background-color: #E0E2DF; }
+        .section-white { background-color: white; }
+
+        .section-title h2 { color: #816B6E; font-size: 2.2em; margin: 0; text-transform: uppercase; border-left: 5px solid #C99B9B; padding-left: 20px; }
+        
+        .section-body p { margin-bottom: 20px; color: #5D4F51; font-size: 1.1em; font-family: "Roboto", sans-serif; }
+        .section-body ul { padding-left: 20px; color: #5D4F51; font-family: "Roboto", sans-serif; }
+        .section-body li { margin-bottom: 10px; }
+
+        /* --- Centered Watch Section (GRAY) --- */
+        .watch-container { 
+            margin-top: 30px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            text-align: center;
+        }
+        
+        .watch-image-wrapper {
+            position: relative; 
+            width: 100%;
+            max-width: 600px;
+            height: 350px; 
+            box-shadow: 15px 15px 0px rgba(101, 92, 91, 0.15);
+            margin-bottom: 40px;
+        }
+        
+        .watch-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border: 5px solid white; 
+        }
+        
+        .watch-btn {
+            display: inline-block;
+            padding: 12px 40px;
+            background-color: transparent;
+            color: #816B6E !important;
+            border: 2px solid #816B6E;
+            text-decoration: none;
+            font-family: "Playfair Display", serif;
+            font-weight: 700;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+        }
+        
+        .watch-btn:hover {
+            background-color: #816B6E;
+            color: white !important;
+            transform: rotate(-2deg);
+        }
+
+        /* Footer */
+        footer { text-align: center; padding: 40px; color: #655C5B; font-size: 0.9em; border-top: 1px solid #DDBDBE; }
+        .footer-table-wrapper { display: flex; justify-content: center; margin-bottom: 20px; }
+        .footer-table { border-collapse: collapse; text-align: left; }
+        .footer-table th { color: #816B6E; font-size: 1.1em; padding: 5px 10px 5px 0; vertical-align: middle; }
+        .footer-table th:not(:first-child) { padding-left: 30px; }
+        .footer-table td { padding: 5px 0; font-family: "Roboto", sans-serif; white-space: nowrap; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">Cornelia Manda</div>
+            <nav>
+                <ul>
+                    <li><a href="https://cornelia-manda.github.io/home/">Home</a></li>
+                    <li><a href="https://cornelia-manda.github.io/portfolio/">Portfolio</a></li>
+                    <li class="dropdown">
+                        <a href="https://cornelia-manda.github.io/projects/">Projects</a>
+                        <ul class="dropdown-content">
+                            <li><a href="https://cornelia-manda.github.io/videography/">Videography</a></li>
+                            <li><a href="#">Branding</a></li>
+                            <li><a href="#">Web and App</a></li>
+                            <li><a href="#">Graphic Design</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://cornelia-manda.github.io/contact-aboutme/">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="project-hero">
+            <a href="https://cornelia-manda.github.io/videography/" class="back-button">← Back to Videography</a>
+            
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="project-tags">
+                        <span>Videography</span>
+                        <span>Short Film</span>
+                    </div>
+                    <h1>Befolgte Schritte</h1>
+                    <p class="hero-meta">Director / Editor / Lead Actress</p>
+                    <p>My first university short film, created for my GER101 final project, fully utilizing strictly the vocabulary taught in class.</p>
+                </div>
+
+                <div class="project-main-media">
+                    <div class="mySlides">
+                        <img src="Ger101-Still-1.png" alt="Befolgte Schritte Still 1">
+                    </div>
+                    <div class="mySlides">
+                        <img src="Ger101-Still-2.png" alt="Befolgte Schritte Still 2">
+                    </div>
+                    <div class="mySlides">
+                        <img src="Ger101-Still-3.png" alt="Befolgte Schritte Still 3">
+                    </div>
+                    <div class="mySlides">
+                        <img src="Ger101-Still-4.png" alt="Befolgte Schritte Still 4">
+                    </div>
+                    <div class="mySlides">
+                        <img src="Ger101-Still-5.png" alt="Befolgte Schritte Still 5">
+                    </div>
+                    <div class="mySlides">
+                        <img src="Ger101-Still-6.png" alt="Befolgte Schritte Still 6">
+                    </div>
+                    <div class="mySlides">
+                        <img src="Ger101-Still-7.png" alt="Befolgte Schritte Still 7">
+                    </div>
+
+                    <a class="prev" onclick="plusSlides(-1)">❮</a>
+                    <a class="next" onclick="plusSlides(1)">❯</a>
+
+                    <div class="dot-container">
+                        <span class="dot" onclick="currentSlide(1)"></span>
+                        <span class="dot" onclick="currentSlide(2)"></span>
+                        <span class="dot" onclick="currentSlide(3)"></span>
+                        <span class="dot" onclick="currentSlide(4)"></span>
+                        <span class="dot" onclick="currentSlide(5)"></span>
+                        <span class="dot" onclick="currentSlide(6)"></span>
+                        <span class="dot" onclick="currentSlide(7)"></span>
+                    </div>
+                </div>
+                </div>
+        </section>
+
+        <section class="content-section section-light">
+            <div class="section-title"><h2>Project Overview</h2></div>
+            <div class="section-body">
+                <p>This film served as the final project for my GER101 class during my <strong>first term of my first year at the University of Waterloo</strong>. The creative constraint was to build a compelling story while strictly adhering to the basic vocabulary learned during the introductory term. This project marked my debut into university filmmaking and set a high standard for my subsequent creative works.</p>
+            </div>
+        </section>
+
+        <section class="content-section section-white">
+            <div class="section-title"><h2>My Role</h2></div>
+            <div class="section-body">
+                <p>I served as the <strong>Director and Editor</strong>, while also performing as a <strong>Lead Actress</strong>. Managing these responsibilities simultaneously allowed me to oversee the artistic vision from production through to the final cut.</p>
+                <ul>
+                    <li><strong>Post-Production:</strong> Completed the full edit in <strong>Adobe Premiere Pro</strong>, ensuring smooth pacing and narrative clarity.</li>
+                    <li><strong>Technical Management:</strong> Utilized professional production equipment, including a high-end camera and boom mic, to achieve a cinematic look and sound.</li>
+                    <li><strong>Collaborative Leadership:</strong> Led a dedicated production crew and coordinated with my actresses to bring the script to life.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section section-light">
+            <div class="section-title"><h2>Process & Thinking</h2></div>
+            <div class="section-body">
+                <p>The foundation of this project was <strong>true teamwork</strong>. I drafted the script collaboratively with my amazing GER101 classmates, ensuring that every line fit our vocabulary constraints while remaining impactful. To support our technical success on shoot day, I developed a <strong>detailed shot type list</strong> for the camera operator, which allowed for efficient filming and clear communication within our production team.</p>
+            </div>
+        </section>
+
+        <section class="content-section section-white">
+            <div class="section-title"><h2>Outcome</h2></div>
+            <div class="section-body">
+                <p>The experience was both rewarding and transformative, teaching me the value of intense collaboration and technical preparation. The film was highly successful, earning my **first Golden Boar Award** at the University of Waterloo during my very first term of study.</p>
+            </div>
+        </section>
+
+        <section class="content-section section-light">
+            <div class="section-title"><h2>Watch the Film</h2></div>
+            <div class="section-body">
+                <div class="watch-container">
+                    <div class="watch-image-wrapper">
+                        <img src="Ger101-film.jpeg" alt="Befolgte Schritte Cover Image">
+                    </div>
+                    <a href="https://youtu.be/GLmkrX7WhG4?si=vH1-BhZYHMzMyPDR" target="_blank" class="watch-btn">Watch Now</a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-table-wrapper">
+                <table class="footer-table">
+                    <tr>
+                        <th>Email:</th>
+                        <td><a href="mailto:cmanda@uwaterloo.ca">cmanda@uwaterloo.ca</a></td>
+                        <th>School:</th>
+                        <td><a href="https://uwaterloo.ca/stratford-school-of-interaction-design-and-business/global-business-and-digital-arts" target="_blank">University of Waterloo</a></td>
+                        <th>Location:</th>
+                        <td>Kitchener-Waterloo, Ontario</td>
+                    </tr>
+                </table>
+            </div>
+            <p class="copyright">&copy; 2026 Cornelia Manda. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}    
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active-dot", "");
+            }
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active-dot";
+        }
+    </script>
+
+</body>
+</html>
